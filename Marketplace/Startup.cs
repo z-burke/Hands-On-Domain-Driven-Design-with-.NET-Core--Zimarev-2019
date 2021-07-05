@@ -1,3 +1,4 @@
+using Marketplace.Api;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -18,9 +19,10 @@ namespace Marketplace
 
         private IConfiguration Configuration { get; }
         private IHostingEnvironment Environment { get; }
-        
+
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSingleton<ClassifiedAdsApplicationService>();
             services.AddMvc(option => option.EnableEndpointRouting = false);
             services.AddSwaggerGen(c =>
                 c.SwaggerDoc("v1",
@@ -41,9 +43,7 @@ namespace Marketplace
             app.UseMvcWithDefaultRoute();
             app.UseSwagger();
             app.UseSwaggerUI(c =>
-            c.SwaggerEndpoint(
-                    "/swagger/v1/swagger.json",
-                    "ClassifiedAds v1"));
+            c.SwaggerEndpoint("/swagger/v1/swagger.json", "ClassifiedAds v1"));
         }
     }
 }
