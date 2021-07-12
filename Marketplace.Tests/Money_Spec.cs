@@ -48,6 +48,14 @@ namespace Marketplace.Tests
         }
 
         [Fact]
+        public void Unused_currency_should_not_be_allowed()
+        {
+            Assert.Throws<ArgumentException>(() =>
+                Money.FromDecimal(100, "DEM", CurrencyLookup)
+            );
+        }
+
+        [Fact]
         public void Unknown_currency_should_not_be_allowed()
         {
             Assert.Throws<ArgumentException>(() => Money.FromDecimal(100, "WHAT?", CurrencyLookup));
